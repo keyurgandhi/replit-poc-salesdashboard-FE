@@ -4,8 +4,8 @@ import axios from 'axios';
 
 const BASE = axios.create({
   // Use the env variable in production, fallback to relative path for local dev proxy
-  // baseURL: import.meta.env.VITE_BACKEND_URL || '' 
-  baseURL: 'https://replitpocbe-haf2chhgg3hhegck.canadacentral-01.azurewebsites.net/api'
+   baseURL: import.meta.env.VITE_BACKEND_URL || '' 
+  // baseURL: 'https://replitpocbe-haf2chhgg3hhegck.canadacentral-01.azurewebsites.net/api'
 });
 
 console.log("base URL --- ",BASE.defaults.baseURL);

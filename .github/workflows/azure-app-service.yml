@@ -22,17 +22,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
- # NEW CRITICAL STEP: Write a real .env file on the runner disk
+      # FIX 1: Write specifically to .env.production so Vite reads it during production builds
       - name: Generate Production Environment File
         run: |
-          echo "VITE_BACKEND_URL=https://replitpocbe-haf2chhgg3hhegck.canadacentral-01.azurewebsites.net/api" > .env
+          echo "VITE_BACKEND_URL=https://replitpocbe-haf2chhgg3hhegck.canadacentral-01.azurewebsites.net/api" > .env.production
 
+      # FIX 2: Restored standard build command (removed --force)
       - name: Build frontend
-        run: npm run build --force
-        # env:
-        #   VITE_BACKEND_URL: https://replitpocbe-haf2chhgg3hhegck.canadacentral-01.azurewebsites.net/api
+        run: npm run build
 
-       # ADD THIS TEMPORARY DEBUG STEP
       - name: Verify Environment Variable Injection
         run: grep -r "replitpocbe" ./dist/assets/ || echo "URL NOT FOUND IN BUNDLE"
 
