@@ -11,12 +11,6 @@ export default defineConfig({
     },
     dedupe: ["react", "react-dom"],
   },
-  // FORCES VITE TO REPLACE THE VARIABLE WITH THE GITHUB ACTIONS ENV VALUE AT BUILD TIME
-  define: {
-    "import.meta.env.VITE_BACKEND_URL": process.env.VITE_BACKEND_URL 
-      ? JSON.stringify(process.env.VITE_BACKEND_URL) 
-      : "import.meta.env.VITE_BACKEND_URL", // leaves it alone locally so Vite reads .env.local
-  },
   server: {
     port: 3000,
     host: "0.0.0.0",

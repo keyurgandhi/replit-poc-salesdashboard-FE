@@ -22,10 +22,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+ # NEW CRITICAL STEP: Write a real .env file on the runner disk
+      - name: Generate Production Environment File
+        run: |
+          echo "VITE_BACKEND_URL=https://replitpocbe-haf2chhgg3hhegck.canadacentral-01.azurewebsites.net/api" > .env
+
       - name: Build frontend
         run: npm run build --force
-        env:
-          VITE_BACKEND_URL: https://replitpocbe-haf2chhgg3hhegck.canadacentral-01.azurewebsites.net/api
+        # env:
+        #   VITE_BACKEND_URL: https://replitpocbe-haf2chhgg3hhegck.canadacentral-01.azurewebsites.net/api
 
        # ADD THIS TEMPORARY DEBUG STEP
       - name: Verify Environment Variable Injection
