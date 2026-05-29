@@ -25,7 +25,7 @@ jobs:
       - name: Build frontend
         run: npm run build
         env:
-          VITE_BACKEND_URL: ${{ secrets.BACKEND_URL }}
+          VITE_BACKEND_URL: https://replitpocbe-haf2chhgg3hhegck.canadacentral-01.azurewebsites.net/api
 
       - name: Login to Azure
         uses: azure/login@v1
