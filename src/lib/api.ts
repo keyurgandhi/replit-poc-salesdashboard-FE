@@ -1,15 +1,45 @@
-const BASE = "/api";
 
+import axios from 'axios';
+// const BASE = "/api";
+
+const BASE = axios.create({
+  // Use the env variable in production, fallback to relative path for local dev proxy
+  baseURL: import.meta.env.VITE_BACKEND_URL || '' 
+});
+
+console.log("base URL --- ",BASE.defaults.baseURL);
+
+// async function get<T>(path: string, params?: Record<string, string | number | null | undefined>): Promise<T> {
+//   const url = new URL(BASE + path, window.location.origin);
+//   if (params) {
+//     for (const [k, v] of Object.entries(params)) {
+//       if (v != null && v !== "") url.searchParams.set(k, String(v));
+//     }
+//   }
+//   const res = await fetch(url.toString());
+//   if (!res.ok) throw new Error(`API error ${res.status}: ${await res.text()}`);
+//   return res.json() as Promise<T>;
+// }
+
+// REWRITTEN GET FUNCTION USING AXIOS
 async function get<T>(path: string, params?: Record<string, string | number | null | undefined>): Promise<T> {
-  const url = new URL(BASE + path, window.location.origin);
+  // Clean up empty strings or null/undefined from params before sending
+  const cleanParams: Record<string, string | number> = {};
   if (params) {
     for (const [k, v] of Object.entries(params)) {
-      if (v != null && v !== "") url.searchParams.set(k, String(v));
+      if (v != null && v !== "") {
+        cleanParams[k] = v;
+      }
     }
   }
-  const res = await fetch(url.toString());
-  if (!res.ok) throw new Error(`API error ${res.status}: ${await res.text()}`);
-  return res.json() as Promise<T>;
+
+  // Axios automatically merges baseURL + path and appends cleanParams as query parameters
+  const response = await BASE.get<T>(path, {
+    params: cleanParams
+  });
+
+  // Axios automatically throws an error on 4xx/5xx statuses, and parses JSON inside .data
+  return response.data;
 }
 
 export interface SalesSummary {
