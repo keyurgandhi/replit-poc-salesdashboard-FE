@@ -10,9 +10,6 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
-    env:
-      VITE_BACKEND_URL: https://replitpocbe-haf2chhgg3hhegck.canadacentral-01.azurewebsites.net/api
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -27,6 +24,8 @@ jobs:
 
       - name: Build frontend
         run: npm run build --force
+        env:
+          VITE_BACKEND_URL: https://replitpocbe-haf2chhgg3hhegck.canadacentral-01.azurewebsites.net/api
 
        # ADD THIS TEMPORARY DEBUG STEP
       - name: Verify Environment Variable Injection
