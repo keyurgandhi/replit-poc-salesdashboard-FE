@@ -27,6 +27,10 @@ jobs:
         env:
           VITE_BACKEND_URL: https://replitpocbe-haf2chhgg3hhegck.canadacentral-01.azurewebsites.net/api
 
+       # ADD THIS TEMPORARY DEBUG STEP
+      - name: Verify Environment Variable Injection
+        run: grep -r "replitpocbe" ./dist/assets/ || echo "URL NOT FOUND IN BUNDLE"
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
